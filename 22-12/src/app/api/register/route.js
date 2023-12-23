@@ -2,10 +2,24 @@ import bcrypt from "bcrypt";
 import { NextResponse } from "next/server";
 import prisma from "@/utils/prismaConnect"
 
-export async function POST(request, response) {
+export async function POST(req, res) {
   try {
-    const body = await request.json();
+    const body = await req.json();
     const { email, name, password } = body;
+
+    if(!name || !email || !password) {
+        return new NextResponse('Missing Fields', { status: 400 })
+    }
+
+    const exist = await prisma.user.findUnique({
+        where: {
+            email
+        }
+    });
+
+    if(exist) {
+        throw new Error('Email already exists')
+    }
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
