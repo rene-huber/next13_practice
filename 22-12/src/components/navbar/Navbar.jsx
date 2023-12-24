@@ -45,11 +45,11 @@ console.log(session?.user?.email)
         <Link href="/dashboard" className={css.link}>dashboard</Link>
         
         <AuthLinks />
-        {
+        {/* {
             session?.user
               ? ( <Image src={session?.user?.image} alt="user image" width={40} height={40} className={css.avatar} />)
               : (<Image src={noPicture} alt="user image" width={40} height={40} className={css.avatar} />)
-          }
+          } */}
       </div>
     </div>
   );
