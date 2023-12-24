@@ -46,7 +46,7 @@ console.log(session?.user)
         
         <AuthLinks />
         {
-            session?.user
+            session?.user?.image
               ? ( <Image src={session?.user?.image} alt="user image" width={40} height={40} className={css.avatar} />)
               : (<Image src={noPicture} alt="user image" width={40} height={40} className={css.avatar} />)
           }
