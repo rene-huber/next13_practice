@@ -2,10 +2,10 @@
 
 import { SessionProvider } from "next-auth/react";
 
-import styles from './page.module.css'
-
-export default function Home() {
+const AuthProvider = ({children}) => {
   return (
     <SessionProvider>{children}</SessionProvider>
   )
 }
+
+export default AuthProvider
