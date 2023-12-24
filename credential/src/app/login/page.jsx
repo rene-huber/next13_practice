@@ -14,7 +14,7 @@ const Login = () => {
     password: ''
   });
 
-  console.log(data,"data")
+
   
   const handleSubmit = async (e) => {
     e.preventDefault();

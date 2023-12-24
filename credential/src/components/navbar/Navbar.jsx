@@ -16,7 +16,7 @@ const Navbar = () => {
   const handleShowDropdown = () => setShowDropdown(prev => true)
   const handleHideDropdown = () => setShowDropdown(prev => false)
  
-console.log(session?.user)
+
 
   return (
     <div className={css.container}>

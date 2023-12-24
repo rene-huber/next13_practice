@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { signIn,signOut, useSession } from "next-auth/react";
 import { toast } from "react-hot-toast"
+import router from "next/router"
 
 export default function Register() {
   const { status } = useSession();
@@ -36,7 +37,7 @@ export default function Register() {
          }
          if (status === "authenticated") {
           console.log("si", status)
-        // router.push("/")
+         router.push("/")
       }
       
       if (status !== "authenticated") {
