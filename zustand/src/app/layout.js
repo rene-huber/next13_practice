@@ -3,7 +3,9 @@ import './globals.css'
 import AuthProvider from '@/providers/AuthProvider'
 import ToasterContext from '@/providers/ToasterProvider'
 import Navbar from './components/navbar/Navbar'
-import Zustand from '@/utils/zustand'
+import { ThemeContextProvider } from '@/context/ThemeContext'
+import ThemeProvider from '@/providers/ThemePorvider'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,15 +21,23 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body >
-        <Zustand>
+        <AuthProvider>
+
+<ThemeContextProvider>
+<ThemeProvider> 
 
       
-        <AuthProvider>
 <ToasterContext />
 <Navbar />
         {children}
+
+</ThemeProvider>
+
+
+
+</ThemeContextProvider>
+ 
         </AuthProvider>
-        </Zustand>
         </body>
     </html>
   )
