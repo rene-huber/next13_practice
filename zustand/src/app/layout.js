@@ -3,6 +3,7 @@ import './globals.css'
 import AuthProvider from '@/providers/AuthProvider'
 import ToasterContext from '@/providers/ToasterProvider'
 import Navbar from './components/navbar/Navbar'
+import Zustand from '@/utils/zustand'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -12,14 +13,21 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+  
+
+  
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body >
+        <Zustand>
+
+      
         <AuthProvider>
 <ToasterContext />
 <Navbar />
         {children}
         </AuthProvider>
+        </Zustand>
         </body>
     </html>
   )
