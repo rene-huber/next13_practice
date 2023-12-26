@@ -10,9 +10,14 @@ body {
   overflow-x: hidden;
 }
 
-body {
+body.dark {
   color: #FFF;
   background: #000;
+}
+
+body.light {
+  color: #000;
+  background: #FFF;
 }
 
 a {
