@@ -11,7 +11,7 @@ function Toggle() {
     }, [theme]);
     return (
    <>
-    <button onClick={toggleTheme}>Cambiar Tema</button>
+    <button onClick={toggleTheme}>dark-light</button>
    </>
     )
 }

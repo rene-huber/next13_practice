@@ -1,32 +1,46 @@
-"use client"
-import React, { createContext, useState, useEffect } from 'react';
+"use client";
+import { createContext, useContext, useEffect, useState } from "react";
 
 export const ThemeContext = createContext({
-  theme: 'light',
+  theme: "light",
   toggleTheme: () => {},
 });
 
+export function useTheme() {
+  return useContext(ThemeContext);
+}
+
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('theme') || 'light';
+  const getInitialTheme = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("theme") || "light";
     }
-    return 'light';
-  });
+    return "light";
+  };
+
+  const [theme, setTheme] = useState(getInitialTheme);
+  const [mounted, setMounted] = useState(false);
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  };
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('theme', theme);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("theme", theme);
+      setMounted(true);
     }
   }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
-  };
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
+      <div className={theme}>{children}</div>
     </ThemeContext.Provider>
   );
 };
+
+export default ThemeProvider;
