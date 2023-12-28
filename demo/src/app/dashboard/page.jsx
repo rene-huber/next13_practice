@@ -2,6 +2,8 @@
 
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter, redirect } from "next/navigation"
+import Image from "next/image";
+import dancingbaby from "../../../public//dancingbaby.gif"
 
 
 const Dashboard = () => {
@@ -35,6 +37,7 @@ if(session?.user?.role !== "ADMIN"){
         unde consequatur velit rem repellendus tenetur. 
         Blanditiis quis dolores mollitia cum, corrupti porro 
         ad similique earum ab.</p>
+        <Image src={dancingbaby} alt="user image" width={140} height={140}  />
       <p>Lorem ipsum dolor sit amet consectetur 
         adipisicing elit. Blanditiis at ad nulla fugiat 
         unde consequatur velit rem repellendus tenetur. 

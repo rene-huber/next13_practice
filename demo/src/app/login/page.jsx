@@ -93,7 +93,9 @@ const loginUser = async (e) => {
           Sign in with Google
         </div>
         <div className={css.socialButton} onClick={() => signIn("github")}>Sign in with Github</div>
-        <div className={css.socialButton}>Sign in with Facebook</div>
+        <div className={css.socialButton} onClick={() => signIn("facebook")}>Sign in with Facebook</div>
+
+      
       </div>
       <section>
         <div className={css.or}>OR</div>

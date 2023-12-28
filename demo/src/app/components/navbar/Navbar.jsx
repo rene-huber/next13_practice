@@ -6,7 +6,7 @@ import noPicture from "../../../../public/noImage.png";
 import dancingbaby from "../../../../public/dancingbaby.gif";
 import Link from "next/link";
 import AuthLinks from "../authLinks/AuthLinks";
-import ThemeToggle from "../themeToggle/ThemeToggle";
+
 import {signIn, signOut, useSession} from 'next-auth/react'
 
 const Navbar = () => {
