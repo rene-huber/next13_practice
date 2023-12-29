@@ -17,10 +17,11 @@ const createPost = () => {
   const UPLOAD_PRESET = 'blog13';
 
   const [photo, setPhoto] = useState('');
-  const [media, setMedia] = useState("");
   const [desc, setDesc] = useState("");
   const [title, setTitle] = useState("");
   const [catSlug, setCatSlug] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   if (status === "loading") {
     return <div className={styles.loading}>Loading...</div>;
@@ -34,6 +35,8 @@ const createPost = () => {
   const uploadImage = async () => {
     if (!photo) return;
 
+    setIsLoading(true);
+    setError("");
     const formData = new FormData();
     formData.append("file", photo);
     formData.append("upload_preset", UPLOAD_PRESET);
@@ -45,10 +48,13 @@ const createPost = () => {
       });
 
       const data = await res.json();
-      return data.secure_url
+      setIsLoading(false);
+      return data.secure_url;
     } catch (error) {
-      console.error(error)
-      return null
+      console.error(error);
+      setError("Error al cargar la imagen.");
+      setIsLoading(false);
+      return null;
     }
   };
 
@@ -103,6 +109,8 @@ const createPost = () => {
       <textarea placeholder='Description...' onChange={(e) => setDesc(e.target.value)} />
       <label htmlFor='image'>Upload Image</label>
       <input id='image' type="file" style={{ display: 'none' }} onChange={(e) => setPhoto(e.target.files[0])} />
+      {isLoading ? <p>wait..upload</p> : null}
+      {error ? <p>Error: {error}</p> : null}
       <button type="submit">Create</button>
     </form>
   );
