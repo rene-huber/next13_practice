@@ -22,6 +22,9 @@ console.log(status, "status")
         <div className={styles.socialButton} onClick={() => signIn("google")}>
           Sign in with Google
         </div>
+        <div className={styles.socialButton} onClick={() => signIn("github")}>
+          Sign in with github
+        </div>
         {status === "authenticated" ? (
     <button onClick={() => signOut()}>Log Out</button>
         ) : (
