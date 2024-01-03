@@ -15,7 +15,7 @@ const onePost = async ({ params }) => {
   return (
     <div>
       <h1 className="blog-title">{post.title}</h1>
-      
+      <p>views: {post.views}</p>
       <div className="blog-content">{post.desc}</div>
       <Image src={post.img} alt={post.title} width={300} height={300} />
       

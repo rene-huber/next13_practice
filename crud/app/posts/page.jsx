@@ -20,6 +20,7 @@ const PostPage = async () => {
                 
                 <h2>{post.title}</h2>
                 <p>Categorie: {post.catSlug}</p>
+              
                 <Image src={post.img} alt={post.title} width={300} height={300} />
               </Link>
             ))}
