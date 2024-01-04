@@ -1,6 +1,9 @@
 import prisma from "@/utils/prismaConnect";
 import Image from "next/image";
 
+import { getAuthSession } from "@/utils/auth";
+
+
 const onePost = async ({ params }) => {
   const post = await prisma.post.findUnique({
     where: {
@@ -18,6 +21,7 @@ const onePost = async ({ params }) => {
       <p>views: {post.views}</p>
       <div className="blog-content">{post.desc}</div>
       <Image src={post.img} alt={post.title} width={300} height={300} />
+      {/* <button onClick={handleDelete} className={classes.deleteButton}>deleteButton</button> */}
       
     </div>
   );
