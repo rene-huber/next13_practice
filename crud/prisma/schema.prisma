@@ -96,3 +96,12 @@ model Comment {
   postSlug  String
   post      Post     @relation(fields: [postSlug], references: [slug])
 }
+
+model PostView {
+  id        String   @id @default(cuid()) @map("_id")
+  postSlug  String
+  userEmail String
+  viewedAt  DateTime @default(now())
+
+  @@unique([postSlug, userEmail])
+}
