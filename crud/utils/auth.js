@@ -100,4 +100,6 @@ pages: {
 
 };
 
+
 export const getAuthSession = () => getServerSession(authOptions);
+

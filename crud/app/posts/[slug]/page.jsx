@@ -67,10 +67,13 @@ if (userEmail) {
       <h1 className="blog-title">{post.title}</h1>
       <h2>{post.user}</h2>
       <div className="blog-content">{post.desc}</div>
+      <p>views: {post.views} </p>
       <Image src={post.img} alt={post.title} width={300} height={300} />
       
     </div>
   );
 };
 
+
 export default onePost
+
