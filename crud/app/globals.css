@@ -16,7 +16,16 @@ body {
   overflow-x: hidden;
   background: #383838;
 }
+body.dark {
+  color: #dfdfdf;
+  background: #757575;
+}
 
+body.light {
+  
+  color: #d5d5d5;
+  background: #000;
+}
 a {
   color: inherit;
   text-decoration: none;

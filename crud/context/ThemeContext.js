@@ -21,8 +21,8 @@ export const ThemeProvider = ({ children }) => {
   };
 
   const [theme, setTheme] = useState(getInitialTheme);
-  const [mounted, setMounted] = useState(false);
   const { data: sezzion, status } = useSession(); 
+  const [mounted, setMounted] = useState(false);
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
@@ -31,6 +31,7 @@ export const ThemeProvider = ({ children }) => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("theme", theme);
+      document.body.className = theme;
       setMounted(true);
     }
   }, [theme]);
