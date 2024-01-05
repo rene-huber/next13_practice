@@ -2,6 +2,7 @@ import prisma from "@/utils/prismaConnect"
 import Link from "next/link"
 import Image from "next/image"
 
+
 const PostPage = async () => {
     const posts = await prisma.post.findMany({
         orderBy: {

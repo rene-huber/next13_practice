@@ -92,6 +92,7 @@ const loginUser = async (e) => {
         <div className={css.socialButton} onClick={() => signIn("google")}>
           Sign in with Google
         </div>
+
         <div className={css.socialButton} onClick={() => signIn("github")}>Sign in with Github</div>
         <div className={css.socialButton} onClick={() => signIn("facebook")}>Sign in with Facebook</div>
 
@@ -100,6 +101,7 @@ const loginUser = async (e) => {
       <section>
         <div className={css.or}>OR</div>
         {status !== "authenticated" ? (
+
     <button onClick={() => signOut()}>Log Out</button>
         ) : (
           <p>Not signed in</p>

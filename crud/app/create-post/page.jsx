@@ -52,7 +52,7 @@ const createPost = () => {
       return data.secure_url;
     } catch (error) {
       console.error(error);
-      setError("Error al cargar la imagen.");
+      setError("Error upload image");
       setIsLoading(false);
       return null;
     }
