@@ -3,7 +3,7 @@ import { signIn,signOut, useSession } from "next-auth/react";
 import { useState, useEffect } from "react"
 import css from "./loginPage.module.css"
 import { useRouter } from "next/navigation"
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 
  
