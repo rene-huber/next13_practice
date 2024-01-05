@@ -8,6 +8,7 @@ import Link from "next/link";
 import AuthLinks from "@/components/authLinks/AuthLinks";
 
 import {signIn, signOut, useSession} from 'next-auth/react'
+import Toggle from '../toggle/Toggle';
 
 const Navbar = () => {
 
@@ -32,7 +33,6 @@ console.log(session?.user?.email)
    
       
       </div>
-
       <div className={css.userEmail}>
       {
             session?.user
@@ -45,6 +45,7 @@ console.log(session?.user?.email)
         <Link href="/posts" className={css.link}>Posts</Link>
         <Link href="/dashboard" className={css.link}>dashboard</Link>
         
+<Toggle />
         <AuthLinks />
         {
             session?.user?.image
