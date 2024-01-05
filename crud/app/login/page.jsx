@@ -1,8 +1,9 @@
 "use client";
 import { signIn,signOut, useSession } from "next-auth/react";
 import { useState, useEffect } from "react"
-import css from "./loginPage.module.css";
-import { useRouter, redirect } from "next/navigation";
+import css from "./loginPage.module.css"
+import { useRouter } from "next/navigation"
+import toast, { Toaster } from 'react-hot-toast';
 
 
  
@@ -10,14 +11,18 @@ import { useRouter, redirect } from "next/navigation";
 const LoginPage = () => {
   const status = useSession();
 
- console.log(status)
+  
+  
+  console.log(status.status,   "status")
 
   const router = useRouter();
 
-  
-if (status.status === "authenticated" && status.data.user.role === "ADMIN") {
-  router.push("/dashboard")
-  }
+
+  useEffect(() => {
+    if (status.status === "authenticated" && status.data.user.role === "ADMIN") {
+      router.push("/dashboard");
+    }
+  }, [status.status]);
 
 
   const [data, setData] = useState({
