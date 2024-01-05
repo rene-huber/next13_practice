@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-
+import { useRouter } from 'next/router';
 import { authOptions }from "@/utils/auth"
 import prisma from "@/utils/prismaConnect"
 import Image from "next/image"
@@ -7,10 +7,24 @@ import Image from "next/image"
 const onePost = async ({ params }) => {
 
   const session = await getServerSession(authOptions);
-  const slug = params.slug;
+
+  const router = useRouter();
+  const { slug } = router.query;
+
+  // const slug = params.query;
    const userEmail = session?.user?.email;
 
-console.log(session, "session2")
+console.log(slug, "session2222222")
+
+
+const post = await prisma.post.findUnique({
+  where: { slug},
+})
+
+if (!post) {
+  return <div>Loading...</div>
+}
+
 
 
 
@@ -26,7 +40,7 @@ if (userEmail) {
 
   if (!viewExists) {
     await prisma.post.update({
-      where: { slug },
+      where: { slug: params.slug },
       data: { views: { increment: 1 } },
     });
 
@@ -41,26 +55,7 @@ if (userEmail) {
 
 
 
-
-
-
-
-
-  // await prisma.post.update({
-  //   where: { slug },
-  //   data: { views: { increment: 1 } },
-  //   include: { user: true },
-
-  // });
-
-
-  const post = await prisma.post.findUnique({
-    where: { slug},
-  })
-
-  if (!post) {
-    return <div>Loading...</div>
-  }
+  
 
   return (
     <div>
@@ -69,7 +64,13 @@ if (userEmail) {
       <div className="blog-content">{post.desc}</div>
       <p>views: {post.views} </p>
       <Image src={post.img} alt={post.title} width={300} height={300} />
-      
+      <p>{post.userEmail}</p>
+
+
+      {userEmail === post.userEmail && (
+        <button>Edit Post</button>
+      )}
+
     </div>
   );
 };
