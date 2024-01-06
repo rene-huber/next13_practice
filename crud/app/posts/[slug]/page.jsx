@@ -1,24 +1,24 @@
 import { getServerSession } from "next-auth";
-import { useRouter } from 'next/router';
+
 import { authOptions }from "@/utils/auth"
 import prisma from "@/utils/prismaConnect"
 import Image from "next/image"
 
 const onePost = async ({ params }) => {
 
+  const slug = params.slug;
   const session = await getServerSession(authOptions);
 
-  const router = useRouter();
-  const { slug } = router.query;
+  const userEmail = session?.user?.email;
 
-  // const slug = params.query;
-   const userEmail = session?.user?.email;
+
+console.log(slug, "session2222222")
 
 console.log(slug, "session2222222")
 
 
 const post = await prisma.post.findUnique({
-  where: { slug},
+  where: { slug },
 })
 
 if (!post) {
