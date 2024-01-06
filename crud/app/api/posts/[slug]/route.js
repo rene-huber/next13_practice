@@ -1,4 +1,5 @@
-import { getAuthSession } from "@/utils/auth";
+import { getAuthSession, getServerSession } from "next-auth";
+import { authOptions } from "@/utils/auth"
 import prisma from "@/utils/prismaConnect";
 import { NextResponse } from "next/server";
 
@@ -6,15 +7,57 @@ import { NextResponse } from "next/server";
 
 export const GET = async (req, { params }) => {
   const { slug } = params;
+  const session = await getServerSession(authOptions);
+  const userEmail = session?.user?.email;
+
+console.log(slug, "slug8888888")
 
   try {
-    const post = await prisma.post.update({
-      where: { slug },
-      data: { views: { increment: 1 } },
-      include: { user: true },
-    });
 
-    return new NextResponse(JSON.stringify(post, { status: 200 }));
+    if (userEmail) {
+      const viewExists = await prisma.postView.findUnique({
+        where: {
+          postSlug_userEmail: {
+            postSlug: slug,
+            userEmail: userEmail,
+          },
+        },
+      });
+  
+      if (!viewExists) {
+        await prisma.post.update({
+          where: { slug},
+          data: { views: { increment: 1 } },
+        });
+  
+        await prisma.postView.create({
+          data: {
+            postSlug: slug,
+            userEmail: userEmail,
+          },
+        });
+      }
+    }
+
+const post = await prisma.post.findUnique({
+  where: { slug },
+
+});
+return new NextResponse(JSON.stringify({ post }, { status: 200 }));
+    
+  
+
+    // const post = await prisma.post.update({
+    //   where: { slug },
+    //   data: { views: { increment: 1 } },
+    //   include: { user: true },
+    // });
+
+
+
+
+
+
   } catch (err) {
     console.log(err);
     return new NextResponse(
