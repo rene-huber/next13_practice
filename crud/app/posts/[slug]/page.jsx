@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/auth";
 import prisma from "@/utils/prismaConnect";
 import Image from "next/image";
+import DeletePost from "@/components/deletePost/DeletePost";
 
 const onePost = async ({ params, page, cat }) => {
   const slug = params.slug;
@@ -11,30 +12,30 @@ const onePost = async ({ params, page, cat }) => {
 
 
 
-  // if (userEmail) {
-  //   const viewExists = await prisma.postView.findUnique({
-  //     where: {
-  //       postSlug_userEmail: {
-  //         postSlug: slug,
-  //         userEmail: userEmail,
-  //       },
-  //     },
-  //   });
+  if (userEmail) {
+    const viewExists = await prisma.postView.findUnique({
+      where: {
+        postSlug_userEmail: {
+          postSlug: slug,
+          userEmail: userEmail,
+        },
+      },
+    });
 
-  //   if (!viewExists) {
-  //     await prisma.post.update({
-  //       where: { slug},
-  //       data: { views: { increment: 1 } },
-  //     });
+    if (!viewExists) {
+      await prisma.post.update({
+        where: { slug},
+        data: { views: { increment: 1 } },
+      });
 
-  //     await prisma.postView.create({
-  //       data: {
-  //         postSlug: slug,
-  //         userEmail: userEmail,
-  //       },
-  //     });
-  //   }
-  // }
+      await prisma.postView.create({
+        data: {
+          postSlug: slug,
+          userEmail: userEmail,
+        },
+      });
+    }
+  }
 
   const getData = async (page, cat) => {
     const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
@@ -50,7 +51,27 @@ const onePost = async ({ params, page, cat }) => {
 
   const data = await getData();
 
-  // console.log(data?.post?.img, "data333")
+  const handleDelete = async ({slug}) => {
+    if (!confirm("Are you sure you want to delete this post?")) return;
+
+    try {
+        const res = await fetch(`/api/posts/${slug}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (res.ok) {
+            router.push('/'); // Redirige al usuario después de eliminar el post
+        } else {
+            console.error('Failed to delete the post');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+};
+
 
 
   return (
@@ -61,7 +82,7 @@ const onePost = async ({ params, page, cat }) => {
       <p>Description: {data?.post?.desc}</p>
      
       <p>views: {data?.post?.views}</p>
-      {data?.post?.userEmail === userEmail && <button>edit</button>}
+      {data?.post?.userEmail === userEmail && <DeletePost slug={slug} session={session} />}
     </>
   );
 };
