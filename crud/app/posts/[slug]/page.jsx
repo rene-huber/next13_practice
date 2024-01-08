@@ -1,4 +1,6 @@
 import { getServerSession } from "next-auth";
+import { getCurrentUser } from '@/utils/session';
+
 
 import { authOptions } from "@/utils/auth";
 import prisma from "@/utils/prismaConnect";
@@ -6,6 +8,10 @@ import Image from "next/image";
 import DeletePost from "@/components/deletePost/DeletePost";
 
 const onePost = async ({ params, page, cat }) => {
+
+  const userr = await getCurrentUser();
+   console.log(userr, "user344444")
+
   const slug = params.slug;
   const session = await getServerSession(authOptions);
   const userEmail = session?.user?.email;
@@ -63,7 +69,7 @@ const onePost = async ({ params, page, cat }) => {
         });
 
         if (res.ok) {
-            router.push('/'); // Redirige al usuario después de eliminar el post
+            router.push('/'); 
         } else {
             console.error('Failed to delete the post');
         }
