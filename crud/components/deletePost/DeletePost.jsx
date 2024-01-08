@@ -18,7 +18,7 @@ function DeletePost({ slug }) {
             });
 
             if (res.ok) {
-                router.push('/'); // Redirige al usuario después de eliminar el post
+                router.push('/'); 
             } else {
                 console.error('Failed to delete the post');
             }
