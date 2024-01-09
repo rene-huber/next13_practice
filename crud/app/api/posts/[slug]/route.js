@@ -4,12 +4,13 @@ import prisma from "@/utils/prismaConnect";
 import { NextResponse } from "next/server";
 
 
+import { getCurrentUser } from '@/utils/session';
 
 
 
-export const DELETE = async (req,res, {params}) => {
-  const { slug } = req.query;
-  const session = await getServerSession(req, res, authOptions);
+export const DELETE = async (req, {params}) => {
+  const { slug } = params;
+  const session = await getCurrentUser();
   const userEmail = session?.user?.email;
 
 console.log(slug, session, "4444444444444")  
@@ -55,11 +56,14 @@ console.log(slug, session, "4444444444444")
 
 
 export const GET = async (req, { params }) => {
-  const { slug } = params;
-  const session = await getAuthSession();
-  const userEmail = session?.user?.email;
+  const { slug } = params.slug;
+ const session = await getAuthSession();
+ // const userEmail = session?.user?.email;
 
-console.log( session, "GET session--***********")
+const user2 = await getCurrentUser();
+
+
+console.log( session?.user=.role,  "GET session--***********")
 
   try {
 

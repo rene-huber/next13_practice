@@ -4,9 +4,8 @@ import { useRouter } from 'next/navigation';
 
 function DeletePost({ slug }) {
     const { data: session, status } = useSession();
-    const router = useRouter();
 
-    const handleDelete = async ({slug}) => {
+    const handleDelete = async (slug) => {
         if (!confirm("Are you sure you want to delete this post?")) return;
 
         try {
@@ -31,7 +30,7 @@ function DeletePost({ slug }) {
         return <p>Loading...</p>;
     }
 
-    return <button onClick={handleDelete}>Delete Post</button>;
+    return <button onClick={()=>handleDelete(slug)}>Delete Post</button>;
 }
 
 export default DeletePost;
