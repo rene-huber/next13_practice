@@ -57,28 +57,6 @@ const onePost = async ({ params, page, cat }) => {
 
   const data = await getData();
 
-  const handleDelete = async ({slug}) => {
-    if (!confirm("Are you sure you want to delete this post?")) return;
-
-    try {
-        const res = await fetch(`/api/posts/${slug}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (res.ok) {
-            router.push('/'); 
-        } else {
-            console.error('Failed to delete the post');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-};
-
-
 
   return (
     <>
