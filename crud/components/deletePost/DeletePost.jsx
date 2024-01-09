@@ -2,10 +2,12 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
 
-function DeletePost({ slug }) {
+function DeletePost( {slug} ) {
     const { data: session, status } = useSession();
+    const router = useRouter();
 
     const handleDelete = async (slug) => {
+        console.log(slug , "slkug inside");
         if (!confirm("Are you sure you want to delete this post?")) return;
 
         try {
