@@ -10,7 +10,6 @@ import DeletePost from "@/components/deletePost/DeletePost";
 const onePost = async ({ params, page, cat }) => {
 
   const userr = await getCurrentUser();
-   console.log(userr, "user344444")
 
   const slug = params.slug;
   const session = await getServerSession(authOptions);
