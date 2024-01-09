@@ -25,7 +25,6 @@ const AuthLinks = () => {
           </span>
         </>
       )}
-     
     </>
   );
 };
