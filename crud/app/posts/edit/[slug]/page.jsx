@@ -3,14 +3,13 @@
 import Image from "next/image";
 import styles from "./create.module.css";
 import { useEffect, useState } from "react";
-
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-
+import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 
 
-const createPost = async ({ params, page, cat }) => {
-  const { status } = useSession();
+
+const createPost =  ({ params, page, cat }) => {
+
   const router = useRouter();
   const slug = params.slug;
 
@@ -24,20 +23,20 @@ const createPost = async ({ params, page, cat }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-
+console.log(slug, 'slug55555555555');
 
   useEffect(() => {
         async function fetchBlog() {
-            const res = await fetch(`http://localhost:3000/api/posts/edit/${slug}`)
+            const res = await fetch(`http://localhost:3000/api/posts/${slug}`)
 
             const blog = await res.json()
-
+console.log(blog, "blogcececsecsecsecsecsecs");
             setTitle(blog.title)
             setDesc(blog.desc)
             setCategory(blog.category)
         }
         fetchBlog()
-        console.log(fetchBlog());
+
     }, [])
 
 
@@ -87,7 +86,7 @@ const createPost = async ({ params, page, cat }) => {
     }
 
     const slug = slugify(title);
-    const res = await fetch(`/api/posts/${slug}`, {
+    const res = await fetch(`/api/posts/edit/${slug}`, {
       method: "PUT",
       headers: {
         'Content-Type': 'application/json',

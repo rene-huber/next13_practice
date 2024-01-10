@@ -13,6 +13,7 @@ const Card = ({ item }) => {
           <h1>{item.title}</h1>
         </div>
       </Link>
+      <Link href={`/posts/edit/${item.slug}`}>EDIT POST</Link>
     </div>
   );
 };
