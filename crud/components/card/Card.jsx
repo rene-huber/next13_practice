@@ -1,8 +1,15 @@
 import Image from "next/image";
 import styles from "./card.module.css";
 import Link from "next/link";
+import { getCurrentUser } from "@/utils/session";
 
-const Card = ({ item }) => {
+
+
+const Card = async ({ item }) => {
+
+  const userr = await getCurrentUser();
+  console.log(userr, "session");
+  
   return (
     <div className={styles.container} key={item.title}>
       <Link href={`/posts/${item.slug}`}>

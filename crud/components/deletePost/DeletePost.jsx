@@ -6,6 +6,8 @@ function DeletePost({ slug }) {
   const { data: session, status } = useSession();
   const router = useRouter();
 
+
+  
   const handleDelete = async (slug) => {
     console.log(slug, "slkug inside");
     if (!confirm("Are you sure you want to delete this post?")) return;

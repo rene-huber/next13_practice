@@ -29,11 +29,12 @@ console.log(slug, 'slug55555555555');
         async function fetchBlog() {
             const res = await fetch(`http://localhost:3000/api/posts/${slug}`)
 
-            const blog = await res.json()
-console.log(blog, "blogcececsecsecsecsecsecs");
-            setTitle(blog.title)
-            setDesc(blog.desc)
-            setCategory(blog.category)
+            const data = await res.json()
+console.log(data, "blogcececsecsecsecsecsecs");
+            setTitle(data?.post?.title)
+            setDesc(data?.post?.desc)
+            setPhoto(data?.post?.img)
+           
         }
         fetchBlog()
 
@@ -79,25 +80,18 @@ console.log(blog, "blogcececsecsecsecsecsecs");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const imageUrl = await uploadImage()
-    if (!imageUrl) {
-      console.error("Failed to upload image.");
-      return
-    }
-
+  
     const slug = slugify(title);
-    const res = await fetch(`/api/posts/edit/${slug}`, {
-      method: "PUT",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        title,
-        desc,
-       // img: imageUrl, 
-        slug,
-        catSlug: catSlug || "cat-a", 
-      }),
+
+    const body = { title , desc, img: photo, slug, catSlug}
+    
+    const res = await fetch(`/api/posts/${slug}`, {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        method: "PATCH",
+        body: JSON.stringify(body)
+     
     });
     if(!res || res.status !== 200) {
         alert('Error')
@@ -117,23 +111,22 @@ console.log(blog, "blogcececsecsecsecsecsecs");
 
 
 
- 
-
-
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" placeholder='Title...' onChange={(e) => setTitle(e.target.value)} />
+    <input type="text" placeholder='Title...' value={title} onChange={(e) => setTitle(e.target.value)} />
       <select className={styles.select} onChange={(e) => setCatSlug(e.target.value)}>
+        <option value="catSlug">cat-a</option>
         <option value="cat-a">cat-a</option>
         <option value="cat-b">cat-b</option>
         <option value="cat-c">cat-c</option>
       </select>
-      <textarea placeholder='Description...' onChange={(e) => setDesc(e.target.value)} />
+      <textarea placeholder='Description...'  value={desc} onChange={(e) => setDesc(e.target.value)} />
       <label htmlFor='image'>Upload Image</label>
-      <input id='image' type="file" style={{ display: 'none' }} onChange={(e) => setPhoto(e.target.files[0])} />
+<Image src={photo} width={200} height={200}  alt="blabla"/>
+      <input id='image' type="file" style={{ display: 'none' }}  onChange={(e) => setPhoto(e.target.files[0])} />
       {isLoading ? <p>wait..upload</p> : null}
       {error ? <p>Error: {error}</p> : null}
-      <button type="submit">Create</button>
+      <button type="submit">Update Post</button>
     </form>
   );
 };
