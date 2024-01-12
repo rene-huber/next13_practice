@@ -6,6 +6,7 @@ import { authOptions } from "@/utils/auth";
 import prisma from "@/utils/prismaConnect";
 import Image from "next/image";
 import DeletePost from "@/components/deletePost/DeletePost";
+import EditPost from "@/components/edit/Edit";
 
 const onePost = async ({ params, page, cat }) => {
 
@@ -58,7 +59,7 @@ const onePost = async ({ params, page, cat }) => {
 
 
   return (
-    <>
+    <> 
       <Image src={data?.post?.img} alt={data?.post?.title} width={300} height={300} />
 
       <h1>title: {data?.post?.title}</h1>
@@ -66,6 +67,8 @@ const onePost = async ({ params, page, cat }) => {
      
       <p>views: {data?.post?.views}</p>
       {data?.post?.userEmail === userEmail && <DeletePost slug={slug} session={session} />}
+     
+
     </>
   );
 };
