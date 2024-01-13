@@ -23,14 +23,14 @@ const createPost =  ({ params, page, cat }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-console.log(slug, 'slug55555555555');
+
 
   useEffect(() => {
         async function fetchBlog() {
             const res = await fetch(`http://localhost:3000/api/posts/${slug}`)
 
             const data = await res.json()
-console.log(data, "blogcececsecsecsecsecsecs");
+
             setTitle(data?.post?.title)
             setDesc(data?.post?.desc)
             setPhoto(data?.post?.img)
@@ -83,13 +83,13 @@ console.log(data, "blogcececsecsecsecsecsecs");
   
     const slug = slugify(title);
 
-    const body = { title , desc, img: photo, slug, catSlug}
+    const body = { title }
     
     const res = await fetch(`/api/posts/${slug}`, {
         headers: {
             'Content-Type': 'application/json',
         },
-        method: "PATCH",
+        method: "PUT",
         body: JSON.stringify(body)
      
     });
