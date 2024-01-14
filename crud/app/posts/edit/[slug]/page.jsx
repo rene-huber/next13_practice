@@ -82,22 +82,22 @@ console.log(data, "blogcececsecsecsecsecsecs");
     e.preventDefault();
   
     const slug = slugify(title);
-
-    const body = { title , desc, img: photo, slug, catSlug}
+console.log(slug, "slug 8888888888888888888")
+    const body = { title , desc}
     
     const res = await fetch(`/api/posts/${slug}`, {
         headers: {
             'Content-Type': 'application/json',
         },
-        method: "PATCH",
+        method: "PUT",
         body: JSON.stringify(body)
      
     });
-    if(!res || res.status !== 200) {
-        alert('Error')
-        console.log("errororororororororor");
-        return
-    }
+    // if(!res || res.status !== 200) {
+    //     alert('Error')
+    //     console.log("errororororororororor");
+    //     return
+    // }
 
     if (res.status === 200) {
       const data = await res.json();
