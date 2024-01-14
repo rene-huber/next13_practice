@@ -9,6 +9,7 @@ import { getCurrentUser } from '@/utils/session';
 
 
 
+
 export const DELETE = async (req,{ params}) => {
   const  {slug} = params;
   const session = await getCurrentUser();
@@ -127,39 +128,33 @@ return new NextResponse(JSON.stringify({ post }, { status: 200 }));
   
   
   
-  export const PUT = async (req, { params }) => {
-    const { slug } = params;
-    const session = await getServerSession(authOptions);
+  export const PUT = async (req,{ params}) => {
+    const  {slug} = params;
+    const session = await getCurrentUser();
     const userEmail = session?.user?.email;
   
+
   
-    if (!session) {
-      return new NextResponse(
-        JSON.stringify({ message: "Not Authenticated!" }, { status: 401 })
-      );
-    }
+    // if (!session) {
+    //   return new NextResponse(
+    //     JSON.stringify({ message: "Not Authenticated!" }, { status: 401 })
+    //   );
+    // }
   
     try {
       const body = await req.json();
-      const { postId } = req.query;
+     
   
-      if (!postId) {
-        return new NextResponse(
-          JSON.stringify({ message: "Post ID is required" }, { status: 400 })
-        );
-      }
-  
-      const post = await prisma.post.findUnique({ where: { id: postId } });
-      if (!post || post.userEmail !== session.user.email) {
-        return new NextResponse(
-          JSON.stringify({ message: "Unauthorized" }, { status: 403 })
-        );
-      }
+      
   
       const updatedPost = await prisma.post.update({
-        where: { id: postId },
-        data: body,
+        where: { slug },
+        data: {...body},
       });
+
+
+    
+
   
       return new NextResponse(JSON.stringify(updatedPost, { status: 200 }));
     } catch (err) {
