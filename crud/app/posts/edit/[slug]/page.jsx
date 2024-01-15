@@ -93,11 +93,11 @@ console.log(slug, "slug 8888888888888888888")
         body: JSON.stringify(body)
      
     });
-    // if(!res || res.status !== 200) {
-    //     alert('Error')
-    //     console.log("errororororororororor");
-    //     return
-    // }
+    if(!res || res.status !== 200) {
+        alert('Error')
+        console.log("errororororororororor");
+        return
+    }
 
     if (res.status === 200) {
       const data = await res.json();
