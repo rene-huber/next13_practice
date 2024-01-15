@@ -9,6 +9,7 @@ import { getCurrentUser } from '@/utils/session';
 
 
 
+
 export const DELETE = async (req,{ params}) => {
   const  {slug} = params;
   const session = await getCurrentUser();
@@ -129,28 +130,38 @@ return new NextResponse(JSON.stringify({ post }, { status: 200 }));
   
   export const PUT = async (req,{ params}) => {
     const  {slug} = params;
-  const session = await getCurrentUser();
-  const userEmail = session?.user?.email;
 
-console.log(slug,  "4444444555555555555444444")  
+    const session = await getCurrentUser();
+    const userEmail = session?.user?.email;
+  
+
+  
+    // if (!session) {
+    //   return new NextResponse(
+    //     JSON.stringify({ message: "Not Authenticated!" }, { status: 401 })
+    //   );
+    // }
+
   
     
     try {
-      // const body = await req.json();
-      // const { postId } = req.query;
 
-      const { title} = await req.json();
-
-
-      const post = await prisma.post.update({
-        data: { title  },
-        where: { slug },
-      });
-      return NextResponse.json({ message: "Success", post }, { status: 200 });
-
-
-
+      const body = await req.json();
+     
+  
       
+  
+      const updatedPost = await prisma.post.update({
+        where: { slug },
+        data: {...body},
+      });
+
+
+    
+
+  
+      return new NextResponse(JSON.stringify(updatedPost, { status: 200 }));
+
     } catch (err) {
       console.log(err);
       return new NextResponse(
