@@ -23,6 +23,7 @@ const Card = async ({ item }) => {
         </div>
       </Link>
       <Link href={`/posts/edit/${item.slug}`}>EDIT POST</Link>
+      <p>views: {item.views}</p>
     </div>
   );
 };

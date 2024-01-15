@@ -53,7 +53,7 @@ const Comments = ({ postSlug }) => {
           </button>
         </div>
       ) : (
-        <Link href="/login" className="styles.btn_login">Login to write a comment</Link>
+        <Link href="/login" className={styles.btn_login}>Login to write a comment</Link>
       )}
       <div className={styles.comments}>
         {isLoading
