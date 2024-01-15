@@ -11,10 +11,16 @@ const AuthLinks = () => {
 
   return (
     <>
-      {status === "unauthenticated" ? (
+      {status === "unauthenticated" ? (<>
         <Link href="/login" className={css.link}>
           Login
         </Link>
+
+        <Link href="/register" className={css.link}>
+         Register
+        </Link>
+        </>
+
       ) : (
         <>
           <Link href="/create-post" className={css.link}>

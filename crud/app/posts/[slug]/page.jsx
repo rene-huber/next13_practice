@@ -7,6 +7,7 @@ import prisma from "@/utils/prismaConnect";
 import Image from "next/image";
 import DeletePost from "@/components/deletePost/DeletePost";
 import EditPost from "@/components/edit/Edit";
+import Comments from "@/components/comments/Comments";
 
 const onePost = async ({ params, page, cat }) => {
 
@@ -15,6 +16,35 @@ const onePost = async ({ params, page, cat }) => {
   const slug = params.slug;
   const session = await getServerSession(authOptions);
   const userEmail = session?.user?.email;
+
+
+
+  if (userEmail) {
+    const viewExists = await prisma.postView.findUnique({
+      where: {
+        postSlug_userEmail: {
+          postSlug: slug,
+          userEmail: userEmail,
+        },
+      },
+    });
+  
+    if (!viewExists) {
+      await prisma.post.update({
+        where: { slug},
+        data: { views: { increment: 1 } },
+      });
+  
+      await prisma.postView.create({
+        data: {
+          postSlug: slug,
+          userEmail: userEmail,
+        },
+      });
+    }
+  }
+  
+
 
 
 
@@ -43,6 +73,8 @@ const onePost = async ({ params, page, cat }) => {
   //   }
   // }
 
+
+
   const getData = async (page, cat) => {
     const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
       cache: "no-store",
@@ -67,7 +99,7 @@ const onePost = async ({ params, page, cat }) => {
      
       <p>views: {data?.post?.views}</p>
       {data?.post?.userEmail === userEmail && <DeletePost slug={slug} session={session} />}
-     
+      <Comments postSlug={slug} />
 
     </>
   );
