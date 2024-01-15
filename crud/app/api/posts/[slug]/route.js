@@ -66,30 +66,30 @@ export const GET = async (req, { params }) => {
 
   try {
 
-    // if (userEmail) {
-    //   const viewExists = await prisma.postView.findUnique({
-    //     where: {
-    //       postSlug_userEmail: {
-    //         postSlug: slug,
-    //         userEmail: userEmail,
-    //       },
-    //     },
-    //   });
+    if (userEmail) {
+      const viewExists = await prisma.postView.findUnique({
+        where: {
+          postSlug_userEmail: {
+            postSlug: slug,
+            userEmail: userEmail,
+          },
+        },
+      });
   
-    //   if (!viewExists) {
-    //     await prisma.post.update({
-    //       where: { slug},
-    //       data: { views: { increment: 1 } },
-    //     });
+      if (!viewExists) {
+        await prisma.post.update({
+          where: { slug},
+          data: { views: { increment: 1 } },
+        });
   
-    //     await prisma.postView.create({
-    //       data: {
-    //         postSlug: slug,
-    //         userEmail: userEmail,
-    //       },
-    //     });
-    //   }
-    // }
+        await prisma.postView.create({
+          data: {
+            postSlug: slug,
+            userEmail: userEmail,
+          },
+        });
+      }
+    }
 
 const post = await prisma.post.findUnique({
   where: { slug },
@@ -130,6 +130,7 @@ return new NextResponse(JSON.stringify({ post }, { status: 200 }));
   
   export const PUT = async (req,{ params}) => {
     const  {slug} = params;
+
     const session = await getCurrentUser();
     const userEmail = session?.user?.email;
   
@@ -140,8 +141,11 @@ return new NextResponse(JSON.stringify({ post }, { status: 200 }));
     //     JSON.stringify({ message: "Not Authenticated!" }, { status: 401 })
     //   );
     // }
+
   
+    
     try {
+
       const body = await req.json();
      
   
@@ -157,6 +161,7 @@ return new NextResponse(JSON.stringify({ post }, { status: 200 }));
 
   
       return new NextResponse(JSON.stringify(updatedPost, { status: 200 }));
+
     } catch (err) {
       console.log(err);
       return new NextResponse(

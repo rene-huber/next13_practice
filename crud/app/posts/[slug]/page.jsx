@@ -18,30 +18,30 @@ const onePost = async ({ params, page, cat }) => {
 
 
 
-  if (userEmail) {
-    const viewExists = await prisma.postView.findUnique({
-      where: {
-        postSlug_userEmail: {
-          postSlug: slug,
-          userEmail: userEmail,
-        },
-      },
-    });
+  // if (userEmail) {
+  //   const viewExists = await prisma.postView.findUnique({
+  //     where: {
+  //       postSlug_userEmail: {
+  //         postSlug: slug,
+  //         userEmail: userEmail,
+  //       },
+  //     },
+  //   });
 
-    if (!viewExists) {
-      await prisma.post.update({
-        where: { slug},
-        data: { views: { increment: 1 } },
-      });
+  //   if (!viewExists) {
+  //     await prisma.post.update({
+  //       where: { slug},
+  //       data: { views: { increment: 1 } },
+  //     });
 
-      await prisma.postView.create({
-        data: {
-          postSlug: slug,
-          userEmail: userEmail,
-        },
-      });
-    }
-  }
+  //     await prisma.postView.create({
+  //       data: {
+  //         postSlug: slug,
+  //         userEmail: userEmail,
+  //       },
+  //     });
+  //   }
+  // }
 
   const getData = async (page, cat) => {
     const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
