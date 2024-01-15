@@ -12,37 +12,63 @@ import Comments from "@/components/comments/Comments";
 const onePost = async ({ params, page, cat }) => {
 
   const userr = await getCurrentUser();
-
   const slug = params.slug;
   const session = await getServerSession(authOptions);
   const userEmail = session?.user?.email;
 
-
-
-  if (userEmail) {
-    const viewExists = await prisma.postView.findUnique({
-      where: {
-        postSlug_userEmail: {
-          postSlug: slug,
-          userEmail: userEmail,
-        },
-      },
+  
+  
+  const getData = async (page, cat) => {
+    const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
+      cache: "no-store",
     });
-  
-    if (!viewExists) {
-      await prisma.post.update({
-        where: { slug},
-        data: { views: { increment: 1 } },
-      });
-  
-      await prisma.postView.create({
-        data: {
-          postSlug: slug,
-          userEmail: userEmail,
+
+    if (!res.ok) {
+      throw new Error("Failed");
+    }
+
+    return res.json();
+  };
+
+  const data = await getData();
+
+console.log(data, "datakkkkkkkkkkkk");
+
+if(data?.post ){
+  try {
+    if (userEmail) {
+      const viewExists = await prisma.postView.findUnique({
+        where: {
+          postSlug_userEmail: {
+            postSlug: slug,
+            userEmail: userEmail,
+          },
         },
       });
+    
+      if (!viewExists) {
+        await prisma.post.update({
+          where: { slug},
+          data: { views: { increment: 1 } },
+        });
+    
+        await prisma.postView.create({
+          data: {
+            postSlug: slug,
+            userEmail: userEmail,
+          },
+        });
+      }
     }
+    
+  } catch (error) {
+    console.error(err);
+    return new NextResponse(
+      JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
+    );
   }
+}
+
   
 
 
@@ -75,19 +101,6 @@ const onePost = async ({ params, page, cat }) => {
 
 
 
-  const getData = async (page, cat) => {
-    const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
-      cache: "no-store",
-    });
-
-    if (!res.ok) {
-      throw new Error("Failed");
-    }
-
-    return res.json();
-  };
-
-  const data = await getData();
 
 
   return (
