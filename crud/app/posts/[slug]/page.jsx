@@ -21,7 +21,7 @@ const onePost = async ({ params, page, cat }) => {
   const getData = async (page, cat) => {
     const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
       cache: "no-store",
-    });
+    }, { next: { revalidate: 0 } });
 
     if (!res.ok) {
       throw new Error("Failed");
