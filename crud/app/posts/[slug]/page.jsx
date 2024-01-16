@@ -12,73 +12,16 @@ import Comments from "@/components/comments/Comments";
 const onePost = async ({ params, page, cat }) => {
 
   const userr = await getCurrentUser();
-
   const slug = params.slug;
   const session = await getServerSession(authOptions);
   const userEmail = session?.user?.email;
 
-
-
-  if (userEmail) {
-    const viewExists = await prisma.postView.findUnique({
-      where: {
-        postSlug_userEmail: {
-          postSlug: slug,
-          userEmail: userEmail,
-        },
-      },
-    });
   
-    if (!viewExists) {
-      await prisma.post.update({
-        where: { slug},
-        data: { views: { increment: 1 } },
-      });
   
-      await prisma.postView.create({
-        data: {
-          postSlug: slug,
-          userEmail: userEmail,
-        },
-      });
-    }
-  }
-  
-
-
-
-
-  // if (userEmail) {
-  //   const viewExists = await prisma.postView.findUnique({
-  //     where: {
-  //       postSlug_userEmail: {
-  //         postSlug: slug,
-  //         userEmail: userEmail,
-  //       },
-  //     },
-  //   });
-
-  //   if (!viewExists) {
-  //     await prisma.post.update({
-  //       where: { slug},
-  //       data: { views: { increment: 1 } },
-  //     });
-
-  //     await prisma.postView.create({
-  //       data: {
-  //         postSlug: slug,
-  //         userEmail: userEmail,
-  //       },
-  //     });
-  //   }
-  // }
-
-
-
   const getData = async (page, cat) => {
     const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
       cache: "no-store",
-    });
+    }, { next: { revalidate: 0 } });
 
     if (!res.ok) {
       throw new Error("Failed");
@@ -89,6 +32,48 @@ const onePost = async ({ params, page, cat }) => {
 
   const data = await getData();
 
+console.log(data, "datakkkkkkkkkkkk");
+
+if(data?.post ){
+  try {
+    if (userEmail) {
+      const viewExists = await prisma.postView.findUnique({
+        where: {
+          postSlug_userEmail: {
+            postSlug: slug,
+            userEmail: userEmail,
+          },
+        },
+      });
+    
+      if (!viewExists) {
+        await prisma.post.update({
+          where: { slug},
+          data: { views: { increment: 1 } },
+        });
+    
+        await prisma.postView.create({
+          data: {
+            postSlug: slug,
+            userEmail: userEmail,
+          },
+        });
+      }
+    }
+    
+  } catch (error) {
+    console.error(err);
+    return new NextResponse(
+      JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
+    );
+  }
+}
+
+  
+
+
+
+
 
   return (
     <> 
@@ -98,6 +83,8 @@ const onePost = async ({ params, page, cat }) => {
       <p>Description: {data?.post?.desc}</p>
      
       <p>views: {data?.post?.views}</p>
+      <p>Author: {data?.post?.userEmail}</p>
+
       {data?.post?.userEmail === userEmail && <DeletePost slug={slug} session={session} />}
       <Comments postSlug={slug} />
 

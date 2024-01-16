@@ -5,7 +5,7 @@ import CardList from '@/components/cardList/CardList'
 export default function Home() {
   return (
     <main className={styles.main}>
-      <h1>holwll  </h1>
+  
       <CardList />
     </main>
   )
