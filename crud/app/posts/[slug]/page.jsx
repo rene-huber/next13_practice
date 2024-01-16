@@ -74,34 +74,6 @@ if(data?.post ){
 
 
 
-  // if (userEmail) {
-  //   const viewExists = await prisma.postView.findUnique({
-  //     where: {
-  //       postSlug_userEmail: {
-  //         postSlug: slug,
-  //         userEmail: userEmail,
-  //       },
-  //     },
-  //   });
-
-  //   if (!viewExists) {
-  //     await prisma.post.update({
-  //       where: { slug},
-  //       data: { views: { increment: 1 } },
-  //     });
-
-  //     await prisma.postView.create({
-  //       data: {
-  //         postSlug: slug,
-  //         userEmail: userEmail,
-  //       },
-  //     });
-  //   }
-  // }
-
-
-
-
 
   return (
     <> 
@@ -111,6 +83,8 @@ if(data?.post ){
       <p>Description: {data?.post?.desc}</p>
      
       <p>views: {data?.post?.views}</p>
+      <p>Author: {data?.post?.userEmail}</p>
+
       {data?.post?.userEmail === userEmail && <DeletePost slug={slug} session={session} />}
       <Comments postSlug={slug} />
 
