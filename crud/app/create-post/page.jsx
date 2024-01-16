@@ -9,7 +9,7 @@ import { useSession } from "next-auth/react";
 
 
 
-const createPost = () => {
+const CreatePost = () => {
   const { status } = useSession();
   const router = useRouter();
 
