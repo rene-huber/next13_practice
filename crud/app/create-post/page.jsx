@@ -116,4 +116,4 @@ const CreatePost = () => {
   );
 };
 
-export default createPost;
+export default CreatePost;

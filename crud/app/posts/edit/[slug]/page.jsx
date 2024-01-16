@@ -8,7 +8,7 @@ import { useSession } from 'next-auth/react'
 
 
 
-const createPost =  ({ params, page, cat }) => {
+const EditPost =  ({ params, page, cat }) => {
 
   const router = useRouter();
   const slug = params.slug;
@@ -131,4 +131,4 @@ console.log(slug, "slug 8888888888888888888")
   );
 };
 
-export default createPost;
+export default EditPost;
