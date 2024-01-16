@@ -63,6 +63,7 @@ const Comments = ({ postSlug }) => {
                 <div className={styles.user}>
                   {item?.user?.image && (
                     <Image
+                    key={item._id}
                       src={item.user.image}
                       alt=""
                       width={50}
