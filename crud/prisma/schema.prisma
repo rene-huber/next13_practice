@@ -87,6 +87,8 @@ model Post {
   comments  Comment[]
 }
 
+
+
 model Comment {
   id        String   @id @default(cuid()) @map("_id")
   createdAt DateTime @default(now())
@@ -105,3 +107,4 @@ model PostView {
 
   @@unique([postSlug, userEmail])
 }
+
