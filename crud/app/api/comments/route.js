@@ -2,7 +2,7 @@ import { getAuthSession } from "@/utils/auth";
 import prisma from "@/utils/prismaConnect";
 import { NextResponse } from "next/server";
 
-// GET ALL COMMENTS OF A POST
+ 
 export const GET = async (req) => {
   const { searchParams } = new URL(req.url);
 
@@ -25,7 +25,7 @@ export const GET = async (req) => {
   }
 };
 
-// CREATE A COMMENT
+ 
 export const POST = async (req) => {
   const session = await getAuthSession();
 

@@ -1,9 +1,10 @@
-import { getAuthSession } from "@/utils/auth";
+
 import { getCurrentUser } from '@/utils/session';
 import { getAuthSession } from "@/utils/auth";
 import prisma from "@/utils/prismaConnect";
 import { NextResponse } from "next/server";
-
+import { getServerSession } from "next-auth/next"
+import { authOptions } from '@/utils/auth';
 
 
 export const POST = async (req,{ params}) => {
@@ -11,14 +12,15 @@ export const POST = async (req,{ params}) => {
   const session = await getCurrentUser();
   const userEmail = session?.user?.email;
 
-  if (!session) {
-    return new NextResponse(
-      JSON.stringify({ message: "Not Authenticated!" }, { status: 401 })
-    );
-  }
+  console.log(session, "4444444444444")
+
+  // if (!session) {
+  //   return new NextResponse(
+  //     JSON.stringify({ message: "Not Authenticated!" }, { status: 401 })
+  //   );
+  // }
 
   try {
-    
     let like = await prisma.like.findUnique({
       where: {
         postSlug_userEmail: {
@@ -35,44 +37,15 @@ export const POST = async (req,{ params}) => {
         data: { postSlug: slug, userEmail: userEmail },
       });
     }
-    
-    return new NextResponse(JSON.stringify(comment, { status: 200 }));
+
+    return new NextResponse(JSON.stringify(like, { status: 200 }));
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return new NextResponse(
       JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
     );
   }
 };
 
-
-
-
-
-
-
-export const PUT = async (req,{ params}) => {
-    const  {slug} = params;
-    const session = await getCurrentUser();
-    const userEmail = session?.user?.email;
-  
-    if (!session) {
-      return new NextResponse(
-        JSON.stringify({ message: "Not Authenticated!" }, { status: 401 })
-      );
-    }
-  
-    try {
-     
-        const post = await prisma.post.update({ where: { slug: req.query.slug }});
-  
-      return new NextResponse(JSON.stringify(post, { status: 200 }));
-    } catch (err) {
-      console.log(err);
-      return new NextResponse(
-        JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
-      );
-    }
-  };
   
   

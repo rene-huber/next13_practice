@@ -4,6 +4,7 @@ import prisma from "@/utils/prismaConnect";
 import { NextResponse } from "next/server";
 import  getServerSession  from "next-auth/react";
 import { getCurrentUser } from '@/utils/session';
+import { useSession, getSession } from "next-auth/react"
 
 
 
@@ -61,7 +62,7 @@ export const GET = async (req, { params }) => {
   const { slug } = params;
   const session = await getAuthSession();
 
-
+console.log(session, "session")
 
 
   try {
@@ -134,7 +135,7 @@ return new NextResponse(JSON.stringify({ post }, { status: 200 }));
     const userEmail = session?.user?.email;
   
 
-  
+  console.log(session, "4444444444444")
     // if (!session) {
     //   return new NextResponse(
     //     JSON.stringify({ message: "Not Authenticated!" }, { status: 401 })
@@ -168,3 +169,7 @@ return new NextResponse(JSON.stringify({ post }, { status: 200 }));
   
   
   // -------------------
+
+
+
+
