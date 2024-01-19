@@ -9,6 +9,7 @@ import AuthLinks from "@/components/authLinks/AuthLinks";
 
 import {signIn, signOut, useSession} from 'next-auth/react'
 import Toggle from '../toggle/Toggle';
+ 
 
 const Navbar = () => {
 
@@ -34,11 +35,15 @@ const Navbar = () => {
       
       </div>
       <div className={css.userEmail}>
-      {
+      
+     {/*
+       {
             session?.user
               ? ( <p>{session?.user?.email}</p>)
               : (<p className={css.notSigned}>Not signed in</p>)
           }
+      */}
+      
       </div>
       <div className={css.links}>
         <Link href="/" className={css.link}>Home</Link>
