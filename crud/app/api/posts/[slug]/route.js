@@ -62,7 +62,7 @@ export const GET = async (req, { params }) => {
   const { slug } = params;
   const session = await getAuthSession();
 
-console.log(session, "session")
+
 
 
   try {
@@ -135,7 +135,7 @@ return new NextResponse(JSON.stringify({ post }, { status: 200 }));
     const userEmail = session?.user?.email;
   
 
-  console.log(session, "4444444444444")
+
     // if (!session) {
     //   return new NextResponse(
     //     JSON.stringify({ message: "Not Authenticated!" }, { status: 401 })

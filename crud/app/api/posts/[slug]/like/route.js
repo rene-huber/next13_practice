@@ -12,7 +12,7 @@ export const PUT = async (req,{ params}) => {
   const session = await getCurrentUser();
   const userEmail = session?.user?.email;
 
-  console.log(session, "4444444444444")
+  console.log(session, "LIKEEEEEEEE 75757")
 
   // if (!session) {
   //   return new NextResponse(

@@ -6,11 +6,12 @@ import {faHeart  } from '@fortawesome/free-solid-svg-icons';
 
 
 const LikeButton = ({ userEmail, slug }) => {
-  const [liked, setLiked] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [liked, setLiked] = useState(false)
+  const [likesCount, setLikesCount] = useState(0);
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    // Implementar la lógica para verificar si el usuario ya ha dado "like"
+   
     const checkIfLiked = async () => {
       try {
         const response = await fetch(`/api/posts/${slug}/like`, {
@@ -21,20 +22,22 @@ const LikeButton = ({ userEmail, slug }) => {
         });
 
         if (response.ok) {
-          const data = await response.json();
-          setLiked(data.isLiked);
+          const data = await response.json()
+          setLiked(data.isLiked)
+          setLikesCount(data.likesCount)
+          
         } else {
-          // Manejar errores, por ejemplo, establecer liked en false
-          setLiked(false);
+          console.error("Failed to Like")
+          setLiked(false)
         }
       } catch (error) {
-        // Manejar errores, por ejemplo, establecer liked en false
-        setLiked(false);
+        console.error("Error:", error)
+        setLiked(false)
       }
     };
-
-    checkIfLiked();
-  }, [userEmail, slug]);
+console.log(checkIfLiked, "checkIfLiked52352352352352352352352");
+    checkIfLiked()
+  }, [userEmail, slug])
 
   const handleLike = async () => {
     
@@ -50,8 +53,9 @@ const LikeButton = ({ userEmail, slug }) => {
 
       if (response.ok) {
         setLiked(!liked);
+        setLikesCount(prev => liked ? prev - 1 : prev + 1);
       } else {
-        // Manejar errores
+        console.log("error");
       }
     } catch (error) {
       // Manejar errores
@@ -62,8 +66,8 @@ const LikeButton = ({ userEmail, slug }) => {
 
   return (
     <button onClick={handleLike} disabled={loading}>
-      {liked ? 'Unlike' : 'Like '}  <FontAwesomeIcon icon={faHeart} style={{ fontSize: '24px', color: 'green' }} />
-    
+      {liked ?  <FontAwesomeIcon icon={faHeart} style={{ fontSize: '24px', color: 'orange' }} /> :  <FontAwesomeIcon icon={faHeart} style={{ fontSize: '24px', color: 'red' }} /> }  
+    {likesCount}
     </button>
   );
 };
