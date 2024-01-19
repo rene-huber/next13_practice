@@ -1,4 +1,4 @@
-// components/LikeButton.js
+"use client"
 
 import React, { useState, useEffect } from 'react';
 
@@ -10,7 +10,7 @@ const LikeButton = ({ userEmail, slug }) => {
     // Implementar la lógica para verificar si el usuario ya ha dado "like"
     const checkIfLiked = async () => {
       try {
-        const response = await fetch(`/api/posts/${slug}/liked`, {
+        const response = await fetch(`/api/posts/${slug}/like`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -34,14 +34,15 @@ const LikeButton = ({ userEmail, slug }) => {
   }, [userEmail, slug]);
 
   const handleLike = async () => {
+    
     setLoading(true);
     try {
-      const response = await fetch(`/api/posts/${slug}/${liked ? 'unlike' : 'like'}`, {
-        method: liked ? 'DELETE' : 'POST',
+      const response = await fetch(`/api/posts/${slug}/like`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userEmail }),
+        body: JSON.stringify({ userEmail , slug}),
       });
 
       if (response.ok) {

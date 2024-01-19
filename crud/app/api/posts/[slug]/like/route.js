@@ -7,7 +7,7 @@ import { getServerSession } from "next-auth/next"
 import { authOptions } from '@/utils/auth';
 
 
-export const POST = async (req,{ params}) => {
+export const PUT = async (req,{ params}) => {
   const  {slug} = params;
   const session = await getCurrentUser();
   const userEmail = session?.user?.email;
@@ -47,5 +47,24 @@ export const POST = async (req,{ params}) => {
   }
 };
 
+//--------------GET-----------nr likes---------
   
+export const GET = async (req, { params }) => {
+  const { slug } = params;
+
+  try {
+    const likesCount = await prisma.like.count({
+      where: {
+        postSlug: slug,
+      },
+    });
+
+    return new NextResponse(JSON.stringify({ likesCount }), { status: 200 });
+  } catch (err) {
+    console.error(err);
+    return new NextResponse(
+      JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
+    );
+  }
+};
   
