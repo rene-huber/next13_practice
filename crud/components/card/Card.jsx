@@ -2,6 +2,7 @@ import Image from "next/image";
 import styles from "./card.module.css";
 import Link from "next/link";
 import { getCurrentUser } from "@/utils/session";
+import LikeButton from "../like/LikeButton";
 
 
 
@@ -27,6 +28,7 @@ const Card = async ({ item }) => {
         <Link href={`/posts/edit/${item.slug}`}>EDIT POST</Link>
       }
       <p>views: {item.views}</p>
+      <LikeButton userEmail={userr?.user.email} slug={item.slug} />
      
     </div>
   );
