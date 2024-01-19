@@ -1,6 +1,9 @@
 "use client"
-
 import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faHeart  } from '@fortawesome/free-solid-svg-icons';
+
+
 
 const LikeButton = ({ userEmail, slug }) => {
   const [liked, setLiked] = useState(false);
@@ -59,7 +62,8 @@ const LikeButton = ({ userEmail, slug }) => {
 
   return (
     <button onClick={handleLike} disabled={loading}>
-      {liked ? 'Unlike' : 'Like'}
+      {liked ? 'Unlike' : 'Like '}  <FontAwesomeIcon icon={faHeart} style={{ fontSize: '24px', color: 'green' }} />
+    
     </button>
   );
 };
