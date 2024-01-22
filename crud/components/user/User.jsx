@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 
 
 
@@ -10,10 +11,10 @@ const User = async ({ item }) => {
     <div key={item.title}>
      
      
-   
+     <Link href={`/user/${item.name}`}>
           <Image src={item.image} alt={item.title} width={30} height={30} />
    
-      
+        </Link>
     
  
      
